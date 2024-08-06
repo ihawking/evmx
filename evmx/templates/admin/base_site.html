@@ -1,0 +1,10 @@
+{% extends "admin/base_site.html" %}
+
+{% block extrahead %}
+  {% if DEBUG_MODE %}
+    <link rel="shortcut icon" type="image/x-icon" href="https://.png"/>
+  {% else %}
+    <link rel="shortcut icon" type="image/x-icon" href="https://.png"/>
+  {% endif %}
+  {{ block.super }}
+{% endblock %}

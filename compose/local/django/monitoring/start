@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -o errexit
+set -o nounset
+
+
+exec watchfiles --filter python "python evmx/chains/monitoring.py"
