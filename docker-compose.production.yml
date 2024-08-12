@@ -2,7 +2,6 @@ volumes:
   production_redis_data: { }
   production_postgres_data: { }
   production_postgres_data_backups: { }
-  production_django_media: { }
 
 services:
   postgres:
@@ -13,10 +12,10 @@ services:
     volumes:
       - production_postgres_data:/var/lib/postgresql/data
       - production_postgres_data_backups:/backups
+    env_file:
+      - .env
     environment:
       POSTGRES_DB: evmx
-    env_file:
-      - ./.envs/.production/.postgres
 
   redis:
     image: docker.io/redis:6
@@ -32,15 +31,16 @@ services:
       - postgres
       - redis
     env_file:
-      - ./.envs/.production/.django
-      - ./.envs/.production/.postgres
+      - .env
+    environment:
+      DJANGO_SETTINGS_MODULE: config.settings.production
     ports:
       - '127.0.0.1:9527:8000'
     healthcheck:
-      test: ["CMD", "timeout", "5", "bash", "-c", "cat < /dev/null > /dev/tcp/127.0.0.1/8000 || exit 1"]
+      test: [ "CMD", "timeout", "5", "bash", "-c", "cat < /dev/null > /dev/tcp/127.0.0.1/8000 || exit 1" ]
       interval: 1s
       timeout: 1s
-      retries: 3
+      retries: 30
       start_period: 30s
     command: /start
 

@@ -1,5 +1,4 @@
 # ruff: noqa: E501
-from .base import *  # noqa: F403
 from .base import DATABASES
 from .base import env
 
@@ -33,7 +32,7 @@ STORAGES = {
 # ADMIN
 # ------------------------------------------------------------------------------
 # Django Admin URL regex.
-ADMIN_URL = env("DJANGO_ADMIN_URL")
+ADMIN_URL = env("DJANGO_ADMIN_URL", default="admin/")
 
 # Your stuff...
 # ------------------------------------------------------------------------------

@@ -4,6 +4,7 @@ import environ
 from django.conf import settings
 from django.http import HttpRequest
 from django.http import JsonResponse
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
 from common.http_codes import HTTP_400000_INVALID_APPID
@@ -15,7 +16,6 @@ from common.utils.security import is_ip_in_whitelist
 from config.settings.unfold.admin import UNFOLD as ADMIN_UNFOLD
 from config.settings.unfold.console import UNFOLD as CONSOLE_UNFOLD
 from globals.models import Project
-from django.urls import reverse_lazy
 
 
 class EVMxMiddleware:
