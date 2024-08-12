@@ -1,93 +1,58 @@
 # EVMx
 
-Game Master Finance.
+基于EVM区块链的加密货币结算系统.
 
 [![Built with Cookiecutter Django](https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg?logo=cookiecutter)](https://github.com/cookiecutter/cookiecutter-django/)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
-License: MIT
+License: GPLv3
 
-## Settings
+## 项目简介
 
-Moved to [settings](http://cookiecutter-django.readthedocs.io/en/latest/settings.html).
+**EVMx**
+是一个基于EVM区块链开发的加密货币结算系统。目的是解决传统中心化系统的资产上链问题，集成了支付、充币、提币等核心功能。  
+适合任何需要对接加密货币到系统中的项目，都可以使用本项目作为与区块链资产互通的网关。  
+本项目已在多款**链游**与**链改**项目中集成。
 
-## Basic Commands
+## 核心功能
 
-### Setting Up Your Users
+1、💳 加密货币**支付网关**  
+2、💰 加密货币**充值网关**  
+3、🏧 加密货币**提币系统**  
+4、🖥️ 完备的**后台管理**功能  
+5、👥 **多租户系统**
 
-- To create a **normal user account**, just go to Sign Up and fill out the form. Once
-  you submit it, you'll see a "Verify Your E-mail Address" page. Go to your console to
-  see a simulated email verification message. Copy the link into your browser. Now the
-  user's email should be verified and ready to go.
+## 支持网络
 
-- To create a **superuser account**, use this command:
+Ethereum、BSC、Polygon等基于EVM架构的区块链。
 
-      $ python manage.py createsuperuser
+## 支持币种
 
-For convenience, you can keep your normal user logged in on Chrome and your superuser
-logged in on Firefox (or similar), so that you can see how the site behaves for both
-kinds of users.
+1、ETH、BNB、MATIC等各个公链主币  
+2、USDT、USDC、UNI等任意ERC20代币，支持自定义发行的代币
 
-### Type checks
+## 后续功能开发
 
-Running type checks with mypy:
+1、智能合约事件订阅  
+2、离线签名提币  
+3、NFT资产数据同步  
+...
 
-    $ mypy evmx
+## 环境配置要求
 
-### Test coverage
+1、2核4G主机起步，添加的公链越多，配置要求越高  
+2、Docker、Docker compose  
+3、HTTPS 格式的区块链RPC接口，监听服务需要高频访问此接口
 
-To run the tests, check your test coverage, and generate an HTML coverage report:
+## 快速启动
 
-    $ coverage run -m pytest
-    $ coverage html
-    $ open htmlcov/index.html
+      $ docker compose -f docker-compose.production.yml up --build
 
-#### Running tests with pytest
+### 功能原理概述
 
-    $ pytest
+- 项目主要包含Postgres、Redis、Web、区块链监听、定时任务五个子系统，均由docker compose统一管理。
+- 本项目持续监听区块链的所有爆块与交易（因此对主机配置要求较高）。
+- 解析每一笔交易，判断是否是系统内交易，如果是则入库处理。
+- 处理完交易，生成对应通知，发送到回调接口。
 
-### Live reloading and Sass CSS compilation
 
-Moved
-to [Live reloading and SASS compilation](https://cookiecutter-django.readthedocs.io/en/latest/developing-locally.html#sass-compilation-live-reloading).
-
-### Celery
-
-This app comes with Celery.
-
-To run a celery worker:
-
-```bash
-cd evmx
-celery -A config.celery_app worker -l info
-```
-
-Please note: For Celery's import magic to work, it is important _where_ the celery
-commands are run. If you are in the same folder with _manage.py_, you should be right.
-
-To
-run [periodic tasks](https://docs.celeryq.dev/en/stable/userguide/periodic-tasks.html),
-you'll need to start the celery beat scheduler service. You can start it as a standalone
-process:
-
-```bash
-cd evmx
-celery -A config.celery_app beat
-```
-
-or you can embed the beat service inside a worker with the `-B` option (not recommended
-for production use):
-
-```bash
-cd evmx
-celery -A config.celery_app worker -B -l info
-```
-
-## Deployment
-
-The following details how to deploy this application.
-
-### Docker
-
-See
-detailed [cookiecutter-django Docker documentation](http://cookiecutter-django.readthedocs.io/en/latest/deployment-with-docker.html).

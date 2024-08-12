@@ -10,7 +10,7 @@ UNFOLD = {
     "ENVIRONMENT": "common.admin.environment_callback",
     "DASHBOARD_CALLBACK": "common.admin.dashboard_callback",
     "LOGIN": {
-        "image": lambda request: static("/login-bg.jpg"),
+        "image": lambda request: static("login-bg.jpg"),
     },
     "SIDEBAR": {
         "navigation": [

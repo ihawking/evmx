@@ -13,6 +13,8 @@ services:
     volumes:
       - production_postgres_data:/var/lib/postgresql/data
       - production_postgres_data_backups:/backups
+    environment:
+      POSTGRES_DB: evmx
     env_file:
       - ./.envs/.production/.postgres
 
@@ -26,8 +28,6 @@ services:
       context: .
       dockerfile: ./compose/production/django/Dockerfile
     image: evmx_production_django
-    volumes:
-      - production_django_media:/app/evmx/media
     depends_on:
       - postgres
       - redis
@@ -36,20 +36,31 @@ services:
       - ./.envs/.production/.postgres
     ports:
       - '127.0.0.1:9527:8000'
+    healthcheck:
+      test: ["CMD", "timeout", "5", "bash", "-c", "cat < /dev/null > /dev/tcp/127.0.0.1/8000 || exit 1"]
+      interval: 1s
+      timeout: 1s
+      retries: 3
+      start_period: 30s
     command: /start
 
   monitoring:
     <<: *django
     image: evmx_production_monitoring
     depends_on:
-      - django
+      django:
+        condition: service_healthy
+    ports: [ ]
+    restart: always
     command: /start-monitoring
 
   celeryworker:
     <<: *django
     image: evmx_production_celeryworker
     depends_on:
-      - django
+      django:
+        condition: service_healthy
+    ports: [ ]
     command: /start-celeryworker
 
   celerybeat:
@@ -57,4 +68,5 @@ services:
     image: evmx_production_celerybeat
     depends_on:
       - celeryworker
+    ports: [ ]
     command: /start-celerybeat

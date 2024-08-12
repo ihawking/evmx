@@ -38,3 +38,6 @@ application = get_wsgi_application()
 # Apply WSGI middleware here.
 # from helloworld.wsgi import HelloWorldApplication
 # application = HelloWorldApplication(application)
+from whitenoise import WhiteNoise
+
+application = WhiteNoise(application)

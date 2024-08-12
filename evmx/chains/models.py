@@ -71,7 +71,7 @@ class Chain(models.Model):
         verbose_name=_("区块确认数量"),
         default=18,
         blank=True,
-        help_text="交易的确认区块数越多,则该交易在区块链中埋的越深,就越不容易被篡改;"
+        help_text="交易的确认区块数越多,则该交易在区块链中埋的越深,就越不容易被篡改;<br>"
         "高于此确认数,系统将认定此交易被区块链最终接受;"
         "数值参考:ETH: 12; BSC: 15; Others: 16;",
     )

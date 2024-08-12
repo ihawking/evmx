@@ -21,7 +21,7 @@ COPY pyproject.toml poetry.lock* /app/
 WORKDIR /app
 RUN --mount=type=cache,target=/root/.cache/pypoetry
 # Install dependencies using poetry
-RUN poetry config virtualenvs.create false && poetry install --only default,production --no-root --no-interaction --no-ansi
+RUN poetry config virtualenvs.create false && poetry install --only main,production --no-root --no-interaction --no-ansi
 
 
 # Python 'run' stage
@@ -56,7 +56,6 @@ COPY --chown=django:django ./compose/production/django/entrypoint /entrypoint
 RUN sed -i 's/\r$//g' /entrypoint
 RUN chmod +x /entrypoint
 
-
 COPY --chown=django:django ./compose/production/django/start /start
 RUN sed -i 's/\r$//g' /start
 RUN chmod +x /start
@@ -69,15 +68,9 @@ COPY --chown=django:django ./compose/production/django/celery/worker/start /star
 RUN sed -i 's/\r$//g' /start-celeryworker
 RUN chmod +x /start-celeryworker
 
-
 COPY --chown=django:django ./compose/production/django/celery/beat/start /start-celerybeat
 RUN sed -i 's/\r$//g' /start-celerybeat
 RUN chmod +x /start-celerybeat
-
-
-COPY --chown=django:django ./compose/production/django/celery/flower/start /start-flower
-RUN sed -i 's/\r$//g' /start-flower
-RUN chmod +x /start-flower
 
 
 # copy application code to WORKDIR

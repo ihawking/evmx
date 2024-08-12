@@ -21,13 +21,13 @@ def create_global_project(sender, **kwargs):
             is_superuser=True,
             is_staff=True,
         )
-        passwd = generate_random_code(length=16)
+        passwd = "admin"
         user.set_password(passwd)
         user.save()
 
         logger.warning(
             _(
-                "初始化超级用户成功;账户:admin,密码:{passwd};请务必登录后台修改密码",
+                "初始化超级用户成功;账户:admin,密码:admin;请务必登录后台修改密码",
             ).format(passwd=passwd),
         )
 
