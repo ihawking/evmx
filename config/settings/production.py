@@ -7,6 +7,7 @@ from .base import env
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 SECRET_KEY = env("DJANGO_SECRET_KEY")
+ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=ALLOWED_HOSTS)
 
 # DATABASES
 # ------------------------------------------------------------------------------
@@ -25,7 +26,7 @@ if USE_HTTPS:
     SECURE_HSTS_PRELOAD = True
 
     CSRF_TRUSTED_ORIGINS = [f"https://{DOMAIN}"]
-    ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=[DOMAIN])
+    ALLOWED_HOSTS.append(DOMAIN)
 
 # ADMIN
 # ------------------------------------------------------------------------------

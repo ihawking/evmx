@@ -13,8 +13,6 @@ SECRET_KEY = env(
     "DJANGO_SECRET_KEY",
     default="lL55QobeNmDYWNErfVpNJcafDZ2gIhT0bubwx6MONLT56Ihfq9w1YH3EVeIm32M6",
 )
-# https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1"]  # noqa: S104
 
 # django-debug-toolbar
 # ------------------------------------------------------------------------------
