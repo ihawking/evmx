@@ -78,7 +78,7 @@ services:
     depends_on:
       - monitoring
     ports:
-      - '127.0.0.1:9527:80'
+      - '0.0.0.0:9527:80'
     volumes:
       - production_django_media:/usr/share/nginx/media:ro
       - production_django_static:/usr/share/nginx/staticfiles:ro
