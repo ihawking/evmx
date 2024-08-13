@@ -1,4 +1,5 @@
 # ruff: noqa: E501
+from .base import *  # noqa
 from .base import DATABASES
 from .base import env
 
@@ -18,16 +19,6 @@ DATABASES["default"]["CONN_MAX_AGE"] = env.int("CONN_MAX_AGE", default=60)
 # https://docs.djangoproject.com/en/dev/ref/settings/#secure-proxy-ssl-header
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-# STATIC & MEDIA
-# ------------------------
-STORAGES = {
-    "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
 
 # ADMIN
 # ------------------------------------------------------------------------------

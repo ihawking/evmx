@@ -2,13 +2,15 @@ volumes:
   production_redis_data: { }
   production_postgres_data: { }
   production_postgres_data_backups: { }
+  production_django_media: { }
+  production_django_static: { }
 
 services:
   postgres:
     build:
       context: .
       dockerfile: ./compose/production/postgres/Dockerfile
-    image: evmx_production_postgres
+    image: evmx_postgres
     volumes:
       - production_postgres_data:/var/lib/postgresql/data
       - production_postgres_data_backups:/backups
@@ -26,7 +28,10 @@ services:
     build:
       context: .
       dockerfile: ./compose/production/django/Dockerfile
-    image: evmx_production_django
+    image: evmx_django
+    volumes:
+      - production_django_media:/app/evmx/media
+      - production_django_static:/app/staticfiles
     depends_on:
       - postgres
       - redis
@@ -34,39 +39,46 @@ services:
       - .env
     environment:
       DJANGO_SETTINGS_MODULE: config.settings.production
-    ports:
-      - '127.0.0.1:9527:8000'
     healthcheck:
-      test: [ "CMD", "timeout", "5", "bash", "-c", "cat < /dev/null > /dev/tcp/127.0.0.1/8000 || exit 1" ]
+      test: [ "CMD", "timeout", "1", "bash", "-c", "cat < /dev/null > /dev/tcp/127.0.0.1/8000 || exit 1" ]
       interval: 1s
       timeout: 1s
       retries: 30
       start_period: 30s
     command: /start
 
-  monitoring:
-    <<: *django
-    image: evmx_production_monitoring
-    depends_on:
-      django:
-        condition: service_healthy
-    ports: [ ]
-    restart: always
-    command: /start-monitoring
-
   celeryworker:
     <<: *django
-    image: evmx_production_celeryworker
+    image: evmx_celeryworker
     depends_on:
       django:
         condition: service_healthy
-    ports: [ ]
     command: /start-celeryworker
 
   celerybeat:
     <<: *django
-    image: evmx_production_celerybeat
+    image: evmx_celerybeat
     depends_on:
       - celeryworker
-    ports: [ ]
     command: /start-celerybeat
+
+  monitoring:
+    <<: *django
+    image: evmx_monitoring
+    depends_on:
+      - celerybeat
+    restart: always
+    command: /start-monitoring
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ./compose/production/nginx/Dockerfile
+    image: evmx_nginx
+    depends_on:
+      - monitoring
+    ports:
+      - '127.0.0.1:9527:80'
+    volumes:
+      - production_django_media:/usr/share/nginx/media:ro
+      - production_django_static:/usr/share/nginx/staticfiles:ro
