@@ -1,6 +1,5 @@
 # ruff: noqa: E501
 from .base import *  # noqa
-from .base import DATABASES
 from .base import env
 
 # GENERAL
@@ -9,9 +8,16 @@ from .base import env
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=ALLOWED_HOSTS)
 
-# DATABASES
-# ------------------------------------------------------------------------------
-DATABASES["default"]["CONN_MAX_AGE"] = env.int("CONN_MAX_AGE", default=60)
+# STATIC & MEDIA
+# ------------------------
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 # SECURITY
 # ------------------------------------------------------------------------------
