@@ -83,6 +83,7 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "guardian",
+    "django_extensions",
 ]
 
 LOCAL_APPS = [
