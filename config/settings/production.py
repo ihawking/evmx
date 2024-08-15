@@ -16,7 +16,7 @@ DATABASES["default"]["CONN_MAX_AGE"] = env.int("CONN_MAX_AGE", default=60)
 # SECURITY
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#secure-proxy-ssl-header
-if USE_HTTPS:
+if USE_DOMAIN:
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
@@ -25,7 +25,7 @@ if USE_HTTPS:
     SECURE_HSTS_PRELOAD = True
 
     CSRF_TRUSTED_ORIGINS = [f"https://{DOMAIN}"]
-    ALLOWED_HOSTS.append(DOMAIN)
+    ALLOWED_HOSTS = [DOMAIN]
 
 # ADMIN
 # ------------------------------------------------------------------------------

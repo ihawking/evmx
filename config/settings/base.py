@@ -17,7 +17,7 @@ env = environ.Env()
 
 # DOMAIN
 DOMAIN = env.str("DOMAIN", None)
-USE_HTTPS = DOMAIN is not None
+USE_DOMAIN = DOMAIN is not None
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1"]  # noqa: S104
 
