@@ -9,6 +9,7 @@ services:
       context: .
       dockerfile: ./compose/production/postgres/Dockerfile
     image: evmx_postgres
+    container_name: evmx_postgres
     volumes:
       - production_postgres_data:/var/lib/postgresql/data
       - production_postgres_data_backups:/backups
@@ -19,6 +20,7 @@ services:
 
   redis:
     image: docker.io/redis:6
+    container_name: evmx_redis
     volumes:
       - production_redis_data:/data
 
@@ -27,6 +29,7 @@ services:
       context: .
       dockerfile: ./compose/production/django/Dockerfile
     image: evmx_django
+    container_name: evmx_django
     depends_on:
       - postgres
       - redis
@@ -45,6 +48,7 @@ services:
   celeryworker:
     <<: *django
     image: evmx_celeryworker
+    container_name: evmx_celeryworker
     depends_on:
       django:
         condition: service_healthy
@@ -55,6 +59,7 @@ services:
   celerybeat:
     <<: *django
     image: evmx_celerybeat
+    container_name: evmx_celerybeat
     depends_on:
       - celeryworker
     healthcheck:
@@ -64,6 +69,7 @@ services:
   monitoring:
     <<: *django
     image: evmx_monitoring
+    container_name: evmx_monitoring
     depends_on:
       - celerybeat
     healthcheck:
@@ -76,6 +82,7 @@ services:
       context: .
       dockerfile: ./compose/production/nginx/Dockerfile
     image: evmx_nginx
+    container_name: evmx_nginx
     depends_on:
       - monitoring
     ports:
