@@ -48,6 +48,8 @@ services:
     depends_on:
       django:
         condition: service_healthy
+    healthcheck:
+      test: [ 'CMD','true' ]
     command: /start-celeryworker
 
   celerybeat:
@@ -55,6 +57,8 @@ services:
     image: evmx_celerybeat
     depends_on:
       - celeryworker
+    healthcheck:
+      test: [ 'CMD','true' ]
     command: /start-celerybeat
 
   monitoring:
@@ -62,6 +66,8 @@ services:
     image: evmx_monitoring
     depends_on:
       - celerybeat
+    healthcheck:
+      test: [ 'CMD','true' ]
     restart: always
     command: /start-monitoring
 
