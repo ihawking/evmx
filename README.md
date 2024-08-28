@@ -1,4 +1,5 @@
 # EVMx
+
 教程文档编写中。。。。。。建议待本项目完善文档后，再进行生产环境部署！
 
 基于EVM区块链的加密货币结算系统.
@@ -46,16 +47,20 @@ Ethereum、BSC、Polygon等基于EVM架构的区块链。
 3、HTTPS 格式的区块链RPC接口，监听服务需要高频访问此接口
 
 ## 启动项目
+
 1、克隆代码仓库到本地  
 `git clone https://github.com/ihawking/evmx.git`  
 2、进入代码库  
 `cd evmx`  
-3、启动项目  
-`docker compose up -d --build`  
+3、创建.env文件（仅首次运行项目才需要创建）  
+`chmod +x init_env.sh && ./init_env.sh`  
+4、启动项目  
+`docker compose up -d --build`
 
 项目启动成功后服务地址：http://0.0.0.0:9527
 
 ## 版本更新
+
 1、进入项目根目录  
 `cd evmx`  
 2、停止项目  
@@ -64,7 +69,6 @@ Ethereum、BSC、Polygon等基于EVM架构的区块链。
 `git pull`  
 4、启动项目  
 `docker compose up -d --build`
-
 
 ### 功能原理概述
 
