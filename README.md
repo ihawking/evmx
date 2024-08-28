@@ -45,9 +45,26 @@ Ethereum、BSC、Polygon等基于EVM架构的区块链。
 2、Docker、Docker compose  
 3、HTTPS 格式的区块链RPC接口，监听服务需要高频访问此接口
 
-## 快速启动
+## 启动项目
+1、克隆代码仓库到本地  
+`git clone https://github.com/ihawking/evmx.git`  
+2、进入代码库  
+`cd evmx`  
+3、启动项目  
+`docker compose up -d --build`  
 
-      $ docker compose -f docker-compose.production.yml up --build
+项目启动成功后服务地址：http://0.0.0.0:9527
+
+## 版本更新
+1、进入项目根目录  
+`cd evmx`  
+2、停止项目  
+`docker compose down`  
+3、更新代码库  
+`git pull`  
+4、启动项目  
+`docker compose up -d --build`
+
 
 ### 功能原理概述
 
