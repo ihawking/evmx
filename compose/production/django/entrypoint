@@ -4,11 +4,7 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-
-if [ -z "${POSTGRES_USER}" ]; then
-    base_postgres_image_default_user='evmx'
-    export POSTGRES_USER="${base_postgres_image_default_user}"
-fi
+export POSTGRES_USER="evmx"
 export DATABASE_URL="postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/evmx"
 
 python << END

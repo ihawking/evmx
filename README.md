@@ -52,7 +52,7 @@ Ethereum、BSC、Polygon等基于EVM架构的区块链。
 `git clone https://github.com/ihawking/evmx.git`  
 2、进入代码库  
 `cd evmx`  
-3、创建.env文件（仅首次运行项目才需要创建）  
+3、创建.env文件（用于保存环境变量，仅首次运行项目才需要创建）  
 `chmod +x init_env.sh && ./init_env.sh`  
 4、启动项目  
 `docker compose up -d --build`
