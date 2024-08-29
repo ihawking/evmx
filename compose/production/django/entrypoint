@@ -4,7 +4,7 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-export POSTGRES_USER="evmx"
+export POSTGRES_USER="postgres"
 export DATABASE_URL="postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/evmx"
 
 python << END
