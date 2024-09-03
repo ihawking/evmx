@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "EVMx"
 version = "0.1.0"
-description = "Game Master Finance."
+description = "A Crypto Gateway."
 authors = ["Hawking"]
 readme = "README.md"
 package-mode = false
@@ -210,7 +210,7 @@ django = "4.2.14"
 django-extensions = "3.2.3"
 django-environ = "0.11.2"
 django-model-utils = "4.5.1"
-django-unfold = "0.33.0"
+django-unfold = "0.37.0"
 django-simple-history = "3.7.0"
 djangorestframework = "3.14.0"
 django-redis = "5.4.0"

@@ -30,8 +30,8 @@ if USE_DOMAIN:
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
 
-    CSRF_TRUSTED_ORIGINS = [f"https://{DOMAIN}"]
     ALLOWED_HOSTS = [DOMAIN]
+    CSRF_TRUSTED_ORIGINS = [f"https://{DOMAIN}"]
 
 # ADMIN
 # ------------------------------------------------------------------------------

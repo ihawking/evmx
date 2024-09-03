@@ -29,7 +29,7 @@ DEBUG = env.bool("DJANGO_DEBUG", False)
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # though not all of them may be available with every OS.
 # In Windows, this must be set to your system time zone.
-TIME_ZONE = "Asia/Shanghai"
+TIME_ZONE = env.str("DJANGO_TIME_ZONE", default="UTC")
 # https://docs.djangoproject.com/en/dev/ref/settings/#language-code
 LANGUAGE_CODE = "en-us"
 # https://docs.djangoproject.com/en/dev/ref/settings/#languages
@@ -264,9 +264,8 @@ LOGGING = {
 
 # Celery
 # ------------------------------------------------------------------------------
-if USE_TZ:
-    # https://docs.celeryq.dev/en/stable/userguide/configuration.html#std:setting-timezone
-    CELERY_TIMEZONE = TIME_ZONE
+# https://docs.celeryq.dev/en/stable/userguide/configuration.html#std:setting-timezone
+CELERY_TIMEZONE = TIME_ZONE
 # https://docs.celeryq.dev/en/stable/userguide/configuration.html#std:setting-broker_url
 CELERY_BROKER_URL = "redis://redis:6379/0"
 # https://docs.celeryq.dev/en/stable/userguide/configuration.html#std:setting-result_backend
