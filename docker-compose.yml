@@ -79,6 +79,6 @@ services:
     image: evmx_nginx
     container_name: evmx_nginx
     depends_on:
-      - monitoring
+      - django
     ports:
       - '0.0.0.0:9527:80'
