@@ -16,24 +16,24 @@ def create_global_project(sender, **kwargs):
         Project.objects.get(id=1)
 
     except Project.DoesNotExist:
-        user = User.objects.create(
+        admin = User.objects.create(
             username="admin",
             is_superuser=True,
             is_staff=True,
         )
         passwd = "admin"
-        user.set_password(passwd)
-        user.save()
+        admin.set_password(passwd)
+        admin.save()
 
         logger.warning(
             _(
-                "初始化超级用户成功;账户:admin,密码:admin;请务必登录后台修改密码",
+                "初始化超级用户成功;账户:admin;密码:admin;请务必登录后台修改密码",
             ).format(passwd=passwd),
         )
 
         Project.objects.create(
             id=1,
-            owner=user,
+            owner=admin,
             name=_("默认项目"),
             appid=f"EVMx-{generate_random_code(length=16, readable=True)}",
             system_account=Account.generate(),
@@ -44,6 +44,6 @@ def create_global_project(sender, **kwargs):
         group = Group.objects.get(pk=1)
 
     except Group.DoesNotExist:
-        group = Group.objects.create(pk=1, name=_("项目管理人"))
+        group = Group.objects.create(pk=1, name=_("项目管理员组"))
 
     initialize_group_permissions(group)

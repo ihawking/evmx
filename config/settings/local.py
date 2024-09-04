@@ -1,5 +1,6 @@
 # ruff: noqa: E501
 import socket
+
 from .base import *  # noqa: F403
 from .base import INSTALLED_APPS
 from .base import MIDDLEWARE

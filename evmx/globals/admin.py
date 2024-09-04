@@ -25,13 +25,13 @@ class ProjectForm(forms.ModelForm):
         collection_address = self.cleaned_data.get("collection_address")
 
         if Account.objects.filter(address=collection_address).exists():
-            msg = "归集地址不能设置为平台内部账户地址"
+            msg = _("归集地址不能设置为平台内部账户地址")
             raise forms.ValidationError(msg)
 
         if not w3_auto.is_checksum_address(
             collection_address,
         ):  # 验证表单中的 uri 指向的 chain id,是否和数据库中的数据匹配
-            msg = "请输入大小写混合的校验和格式地址"
+            msg = _("请输入大小写混合的校验和格式地址")
             raise forms.ValidationError(msg)
         return collection_address
 
@@ -160,6 +160,3 @@ class ProjectAdmin(
 class TaskResultAdmin(ModelAdmin):
     list_display = ("task_id", "task_name", "status", "date_done")
     list_filter = ("status", "task_name", "date_done")
-
-
-admin.site.empty_value_display = "(空)"
