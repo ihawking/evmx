@@ -36,8 +36,19 @@ class UserAdmin(auth_admin.UserAdmin, ModelAdmin):
         ),
         (_("Important dates"), {"fields": ("last_login", "date_joined")}),
     )
-    list_display = ["username", "name", "is_superuser"]
+    list_display = ["username", "project_name", "is_superuser"]
     search_fields = ["name"]
+
+    @admin.display(
+        description="项目",
+    )
+    def project_name(self, obj):
+        return obj.project.name
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        # 只显示非匿名用户
+        return qs.exclude(username="AnonymousUser")
 
 
 @admin.register(Player)

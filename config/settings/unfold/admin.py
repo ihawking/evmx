@@ -24,7 +24,12 @@ UNFOLD = {
                         "link": reverse_lazy("admin:index"),
                     },
                     {
-                        "title": _("项目设置"),
+                        "title": _("管理员"),
+                        "icon": "manage_accounts",
+                        "link": reverse_lazy("admin:users_user_changelist"),
+                    },
+                    {
+                        "title": _("项目管理"),
                         "icon": "settings",
                         "link": reverse_lazy("admin:globals_project_changelist"),
                         "badge": "globals.models.status",
@@ -35,22 +40,6 @@ UNFOLD = {
                         "link": reverse_lazy(
                             "admin:django_celery_results_taskresult_changelist",
                         ),
-                    },
-                ],
-            },
-            {
-                "title": _("管理"),
-                "separator": False,  # Top border
-                "items": [
-                    {
-                        "title": _("群组"),
-                        "icon": "group",
-                        "link": reverse_lazy("admin:auth_group_changelist"),
-                    },
-                    {
-                        "title": _("管理员"),
-                        "icon": "manage_accounts",
-                        "link": reverse_lazy("admin:users_user_changelist"),
                     },
                 ],
             },
