@@ -1,5 +1,12 @@
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import Permission
+from loguru import logger
+
+
+def is_empty_project():
+    from users.models import User
+
+    return not User.objects.exclude(username="AnonymousUser").exists()
 
 
 def initialize_group_permissions(group: Group):
@@ -68,5 +75,5 @@ def initialize_group_permissions(group: Group):
             view_withdrawal,
             view_notification,
         )
-    except Permission.DoesNotExist:
-        pass
+    except Exception as e:
+        logger.exception(e)

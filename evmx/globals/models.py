@@ -96,6 +96,19 @@ class Project(models.Model):
     def __str__(self):
         return self.name
 
+    @classmethod
+    def generate(cls, owner):
+        from chains.models import Account
+
+        project = Project.objects.create(
+            owner=owner,
+            name=f"项目-{owner.username}",
+            appid=f"EVMx-{generate_random_code(length=16, readable=True)}",
+            system_account=Account.generate(),
+            hmac_key=generate_random_code(length=32),
+        )
+        return project
+
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         assign_perm("change_project", self.owner, self)

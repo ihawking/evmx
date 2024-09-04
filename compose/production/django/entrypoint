@@ -4,8 +4,7 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-export POSTGRES_USER="postgres"
-export DATABASE_URL="postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/evmx"
+export DATABASE_URL="postgres://postgres:${POSTGRES_PASSWORD}@postgres:5432/evmx"
 
 python << END
 import sys
@@ -20,7 +19,7 @@ while True:
     try:
         psycopg.connect(
             dbname="evmx",
-            user="${POSTGRES_USER}",
+            user="postgres",
             password="${POSTGRES_PASSWORD}",
             host="postgres",
             port="5432",

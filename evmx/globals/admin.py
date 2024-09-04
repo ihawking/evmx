@@ -72,13 +72,6 @@ class ProjectAdmin(
         return request.user.has_perm("change_project", obj)
 
     def get_readonly_fields(self, request, obj=None):
-        if obj and obj.pk == 1:  # 默认项目
-            return (
-                "system_account",
-                "appid",
-                "name",
-                "owner",
-            )
         if obj:  # 修改项目
             return (
                 "system_account",

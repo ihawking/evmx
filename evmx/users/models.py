@@ -1,12 +1,12 @@
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, Group
 from django.db import models
 from django.db.models import CharField
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
 from guardian.shortcuts import assign_perm
-
 from chains.models import Account
+from globals.models import Project
 
 
 class User(AbstractUser):
@@ -20,6 +20,26 @@ class User(AbstractUser):
     name = CharField(_("Name of User"), blank=True, max_length=255)
     first_name = None  # type: ignore[assignment]
     last_name = None  # type: ignore[assignment]
+
+    @property
+    def is_identified(self):
+        return not self.is_anonymous and self.username != "AnonymousUser"
+
+
+@receiver(post_save, sender=User)
+def generate_project_while_user_created(sender, instance: User, created, **kwargs):
+    if created and instance.is_identified:
+        Project.generate(instance)
+
+
+@receiver(post_save, sender=User)
+def join_group_while_user_created(sender, instance: User, created, **kwargs):
+    if created and instance.is_identified and not instance.is_superuser:
+        group = Group.objects.get(pk=1000)
+        instance.groups.add(group)
+
+        instance.is_staff = True
+        instance.save()
 
 
 class Player(models.Model):
